@@ -1,0 +1,87 @@
+name: Sync Upstream Docs
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'  # every Monday at 6 AM UTC
+  workflow_dispatch:
+
+jobs:
+  update-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Crypted
+        uses: actions/checkout@v3
+
+      - name: Install wget
+        run: sudo apt-get install wget
+
+      - name: Create docs directory
+        run: mkdir -p docs/{xrpl,xrpl/xrpl-py,evm/web3py,bitcoin/bitcoinlib,litecoin/bitcoinlib,dogecoin/bitcoinlib,cardano/pycardano,cosmos/cosmpy,near/near-api-py,solana/solana-py,sui/pysui,ton/pytonlib,algorand/pyteal,polkadot/custom}
+
+      - name: Download XRPL-PY Docs
+        run: |
+          wget -r -np -nH --cut-dirs=3 -R index.html \
+            https://xrpl-py.readthedocs.io/en/stable/ \
+            -P docs/xrpl/xrpl-py
+
+      - name: Download Web3.py Docs
+        run: |
+          wget -r -np -nH --cut-dirs=3 -R index.html \
+            https://web3py.readthedocs.io/en/stable/ \
+            -P docs/evm/web3py
+
+      - name: Download Bitcoinlib Docs
+        run: |
+          wget -r -np -nH --cut-dirs=3 -R index.html \
+            https://bitcoinlib.readthedocs.io/en/latest/ \
+            -P docs/bitcoin/bitcoinlib
+
+      - name: Download PyCardano Docs
+        run: |
+          wget -r -np -nH --cut-dirs=3 -R index.html \
+            https://pycardano.readthedocs.io/en/latest/ \
+            -P docs/cardano/pycardano
+
+      - name: Download Cosmpy Docs
+        run: |
+          wget -r -np -nH --cut-dirs=3 -R index.html \
+            https://cosmpy.readthedocs.io/en/latest/ \
+            -P docs/cosmos/cosmpy
+
+      - name: Download Near-API-Py Docs
+        run: |
+          wget -r -np -nH --cut-dirs=3 -R index.html \
+            https://near-api-py.readthedocs.io/en/latest/ \
+            -P docs/near/near-api-py
+
+      - name: Download Solana-Py Docs
+        run: |
+          wget -r -np -nH --cut-dirs=3 -R index.html \
+            https://michaelhly.github.io/solana-py/ \
+            -P docs/solana/solana-py
+
+      - name: Download PySui Docs
+        run: |
+          wget -r -np -nH --cut-dirs=3 -R index.html \
+            https://pysui.readthedocs.io/en/latest/ \
+            -P docs/sui/pysui
+
+      - name: Download PyTonLib Docs
+        run: |
+          wget -r -np -nH --cut-dirs=3 -R index.html \
+            https://pytonlib.readthedocs.io/en/latest/ \
+            -P docs/ton/pytonlib
+
+      - name: Download PyTeal Docs
+        run: |
+          wget -r -np -nH --cut-dirs=3 -R index.html \
+            https://pyteal.readthedocs.io/en/stable/ \
+            -P docs/algorand/pyteal
+
+      - name: Commit changes
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          git add docs/
+          git commit -m 'Auto-sync upstream docs' || echo "No changes"
+          git push
