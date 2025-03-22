@@ -30,12 +30,6 @@ jobs:
             https://web3py.readthedocs.io/en/stable/ \
             -P docs/evm/web3py
 
-      - name: Download Bitcoinlib Docs
-        run: |
-          wget -r -np -nH --cut-dirs=3 -R index.html \
-            https://bitcoinlib.readthedocs.io/en/latest/ \
-            -P docs/bitcoin/bitcoinlib
-
       - name: Download PyCardano Docs
         run: |
           wget -r -np -nH --cut-dirs=3 -R index.html \
