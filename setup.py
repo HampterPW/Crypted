@@ -2,7 +2,7 @@ import shutil
 import os
 
 # Define source and destination paths
-source_dir = os.path.join(os.getcwd(), "Crypted")  # Assumes "Crypted" is in the current working directory
+source_dir = os.path.join(os.getcwd(), "src/Crypted")  # Assumes "Crypted" is in the current working directory
 user_profile = os.getenv("USERPROFILE")  # Get the current user's profile directory
 destination_dir = os.path.join(user_profile, "AppData", "Local", "Packages", "PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0", "LocalCache", "local-packages", "Python313", "site-packages")
 

@@ -11,7 +11,9 @@
 
 ## Installation
 
-Coming soon...
+```py
+pip install Crypted
+```
 
 ## Usage
 
